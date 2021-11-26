@@ -24,7 +24,7 @@ class CountryDetails extends Component {
     // let's get the country details
     fetchCountryDetails = () => {
         axios
-            .get(`https://raw.githubusercontent.com/sinamoraddar/REST-Countries-API-with-color-theme-switcher--API/master/all.json`);
+            .get(`https://raw.githubusercontent.com/sinamoraddar/REST-Countries-API-with-color-theme-switcher--API/master/all.json`)
             .then(response => {
                 const tempoCountryDetails = response.data.find(
                     country => country.name === this.props.match.params.countryName
@@ -39,4 +39,69 @@ class CountryDetails extends Component {
             })
             .catch(error => console.log(error));
     };
+
+    componentDidMount() {
+        document.title = this.props.match.params.countryName;
+        this.fetchCountryDetails();
+    }
+    componentDidUpdate(prevProps) {
+        document.title = this.props.match.params.countryName;
+        if (prevProps.location.key !== this.props.location.key) {
+            this.fetchCountryDetails();
+        }
+    }
+
+    render() {
+        const {darkMode, appModeChanger, totalCountries, homePage} = this.props;
+        const { countryDetails, notFoundStatus } = this.state;
+        return (
+            <React.Fragment>
+                <header
+                    className={`${styles.countryDetails} ${darkMode ? `dark` : `light`}`}
+                >
+                    <NavBar
+                        darkMode={darkMode}
+                        homePage={homePage}
+                        appModeChanger={appModeChanger}
+                    />
+                    <Link 
+                        to={homePage}
+                        className={`${styles.backButton} ${darkMode ? "dark darkElements" : "Light lightElements"}` }
+                    >
+                        <i className="fas fa-arrow-left"></i>
+                    </Link>
+                </header>
+                <main
+                    className={`${styles.countryDetails} ${styles.main} ${darkMode ? `dark` : `light`}`}
+                >
+                    {}
+                    { CountryDetails ?
+                        ( notFoundStatus ? (
+                            <p className={styles.error}>
+                                Sorry, we don't have any idea about the thing you're looking for...
+                            </p>
+                        ) : (
+                            <React.Fragment>
+                                <div className={styles.error}>
+                                    <img
+                                        src={`https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryDetails.alpha2Code.toLowerCase()}.svg`}
+                                        alt={`${countryDetails.name} flag`}
+                                    />
+                                </div>
+                                <div className={styles.details}>
+                                    <h1> {this.props.match.params.countryName}</h1>
+                                    <div className={styles.detailsContainer}>
+                                        <div className={styles.mainDetails}>
+                                            <p>
+                                                Native Name: {""}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </React.Fragment>
+                        ))}
+                </main>
+            </React.Fragment>
+        )
+    }
 }
