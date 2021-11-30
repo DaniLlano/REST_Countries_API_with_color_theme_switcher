@@ -132,11 +132,49 @@ class CountryDetails extends Component {
                                                     {countryDetails.capital}
                                                 </span>
                                             </p>
+                                            <p>
+                                                Top Level Domain: {""}
+                                                <span
+                                                    className={ darkMode ? styles.darkDetails : styles.lightDetails}
+                                                >
+                                                    {countryDetails.topLevelDomain}
+                                                </span>
+                                            </p>
+                                            <p>
+                                                Currencies: {""}
+                                                <span
+                                                    className={ darkMode ? styles.darkDetails : styles.lightDetails}
+                                                >
+                                                    {" "}
+                                                    {countryDetails.currencies[0].name}
+                                                </span>
+                                            </p>
+                                            <p className={styles.languages}>
+                                                languages: {countryDetails.languages.map(({name}) => (
+                                                    <span
+                                                        className={ darkMode ? styles.darkDetails : styles.lightDetails}
+                                                        key={name}
+                                                        >
+                                                        {name}
+                                                    </span>
+                                                ))}
+                                            </p>
                                         </div>
                                     </div>
+                                    {/* render the border countries */}
+                                    {totalCountries && (
+                                        <BorderCountries 
+                                            {...{totalCountries, countryDetails}}
+                                            darkMode={darkMode}
+                                            homePage={homePage}
+                                        />
+                                    )}
                                 </div>
                             </React.Fragment>
-                        ))}
+                        )
+                    ) : (
+                        <Loading darkMode={darkMode} homePage={homePage} />
+                    )}
                 </main>
             </React.Fragment>
         )
