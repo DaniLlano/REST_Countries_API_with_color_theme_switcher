@@ -68,9 +68,29 @@ class Dashboard extends Component {
                         appModeChanger={this.props.appModeChanger}
                         homePage={homePage}
                     />
-                    <FilterBar />
+                    <FilterBar
+                        countrySearchField={countrySearchField}
+                        darkMode={this.props.darkMode}
+                        regionFilter={regionFilter}
+                        onCountrySearchFieldChange={this.onCountrySearchFieldChange}
+                        onRegionChange={this.onRegionChange}
+                        scrollTo={this.scrollTo}
+                    />
                 </header>
+                <main
+                    className={`${styles.container} ${styles.dashboard} ${styles.fillTheRemainingHeight} ${this.props.darkMode ? `dark` : `light`}`}
+                >
+                    <CountryList 
+                        filteredCountries={filteredCountries ? filteredCountries : totalCountries}
+                        homePage={homePage}
+                        totalCountries={totalCountries}
+                        darkMode={this.props.darkMode}
+                        scrollTo={this.scrollTo}
+                    />
+                </main>
             </Reac.Fragment>
-        )
+        );
     }
 }
+
+export default Dashboard;
