@@ -1,0 +1,51 @@
+import React, { useContext } from "react";
+import styles from "../../../../contexts/AppContext";
+
+const scroll = (scrollTo) => {
+    scrollTo.current.scrollIntoView({behavior: "smooth"});
+}
+
+const INCREMENT = "INCREMENT";
+const DECREMENT = "DECREMENT";
+
+const onSetCurrentPage = (
+    setCurrenPage,
+    currentPage, pageNumberChangingStatus, 
+    scrollTo
+) => {
+    switch (pageNumberChangingStatus) {
+        case INCREMENT: {
+            scroll(scrollTo);
+            setCurrenPage(currentPage + 1);
+            break;
+        }
+        case DECREMENT: {
+            scroll(scrollTo);
+            setCurrenPage(currentPage - 1);
+            break;
+        }
+        default:
+            break;
+    }
+};
+
+// supplementary components
+const paginationOfFirstAndLastPage = (
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    scrollTo
+) => {
+    return (
+        <>
+            <button
+                onClick={currentPage + 1 === totalPages
+                ? () => {
+                   setCurrentPage(0); 
+                } : undefined}
+                className={ currentPage === 0 ? styles.isActive : undefined}
+            >
+            </button>
+        </>
+    )
+}
