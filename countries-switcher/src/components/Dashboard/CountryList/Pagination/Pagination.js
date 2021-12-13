@@ -9,19 +9,19 @@ const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
 
 const onSetCurrentPage = (
-    setCurrenPage,
+    setCurrentPage,
     currentPage, pageNumberChangingStatus, 
     scrollTo
 ) => {
     switch (pageNumberChangingStatus) {
         case INCREMENT: {
             scroll(scrollTo);
-            setCurrenPage(currentPage + 1);
+            setCurrentPage(currentPage + 1);
             break;
         }
         case DECREMENT: {
             scroll(scrollTo);
-            setCurrenPage(currentPage - 1);
+            setCurrentPage(currentPage - 1);
             break;
         }
         default:
@@ -102,5 +102,53 @@ const paginationMiddleSectionCreator = (
                 scrollTo
             );
         }
+        case 2:
+        case totalPages - 1: {
+            return paginationForSecondAndOneBeforeLastPage(
+                currentPage,
+                totalPages,
+                setCurrentPage,
+                scrollTo
+            );
+        }
+        default: {
+            return (
+                <React.Fragment>
+                    <button onClick={() => {setCurrentPage(0); scroll(scrollTo)}}>
+                        1
+                    </button>
+                    <button>
+                        <i className="fas fa-ellipsis-h" />
+                    </button>
+                    <button className={styles.isActive}>{currentPage + 1}</button>
+                    <button className={styles.ellipsis}>
+                        <i className="fas fa-ellipsis-h" />
+                    </button>
+                    <button onClick={() => {setCurrentPage(totalPages - 1); scroll(scrollTo)}}>
+                        {totalPages}
+                    </button>
+                </React.Fragment>
+            );
+        }
     }
+};
+
+// main component
+const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
+    // context
+    const { isUsingDarkMode } = useContext(AppContext);
+
+    return (
+        <div
+            className={`${styles.pagination} ${isUsingDarkMode ? `dark` : `light`}`}
+        >
+            <button
+                onClick={() => {
+                    
+                }}
+            >
+                <i className="fas fa-arrow-left" />
+            </button>
+        </div>
+    )
 }
