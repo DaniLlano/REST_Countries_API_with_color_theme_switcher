@@ -144,8 +144,23 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
         >
             <button
                 onClick={() => {
-                    
+                    onSetCurrentPage(setCurrentPage, currentPage, DECREMENT, scrollTo);
                 }}
+            >
+                <i className="fas fa-arrow-left" />
+            </button>
+            {paginationMiddleSectionCreator(
+                currentPage,
+                totalPages,
+                setCurrentPage,
+                scrollTo
+            )}
+            <button
+                className={styles.nextPage}
+                onClick={() => {
+                    onSetCurrentPage(setCurrentPage, currentPage, INCREMENT, scrollTo);
+                }}
+                disabled={currentPage + 1 === totalPages}
             >
                 <i className="fas fa-arrow-left" />
             </button>
