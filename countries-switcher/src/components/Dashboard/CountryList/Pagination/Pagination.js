@@ -146,6 +146,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
                 onClick={() => {
                     onSetCurrentPage(setCurrentPage, currentPage, DECREMENT, scrollTo);
                 }}
+                disabled={currentPage === 0}
             >
                 <i className="fas fa-arrow-left" />
             </button>
@@ -165,5 +166,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages, scrollTo }) => {
                 <i className="fas fa-arrow-left" />
             </button>
         </div>
-    )
-}
+    );
+};
+
+export default Pagination;
